@@ -1,12 +1,10 @@
-const HUMAN = "cat";
-const AI = "dog";
 const EMPTY = "";
 const PLAYER_META = {
-  [HUMAN]: {
+  cat: {
     label: "小猫",
     image: "assets/cat.jpg",
   },
-  [AI]: {
+  dog: {
     label: "小狗",
     image: "assets/dog.jpg",
   },
@@ -26,17 +24,25 @@ const cells = Array.from(document.querySelectorAll(".cell"));
 const statusEl = document.querySelector("#status");
 const resetButton = document.querySelector("#resetButton");
 const modeButtons = Array.from(document.querySelectorAll(".mode"));
+const pieceButtons = Array.from(document.querySelectorAll(".pet-frame"));
 const humanCard = document.querySelector("#humanCard");
 const aiCard = document.querySelector("#aiCard");
+const humanAvatar = document.querySelector("#humanAvatar");
+const aiAvatar = document.querySelector("#aiAvatar");
+const humanName = document.querySelector("#humanName");
+const aiName = document.querySelector("#aiName");
 const humanScoreEl = document.querySelector("#humanScore");
 const aiScoreEl = document.querySelector("#aiScore");
 const drawScoreEl = document.querySelector("#drawScore");
 
 let board = Array(9).fill(EMPTY);
 let difficulty = "easy";
+let HUMAN = "cat";
+let AI = "dog";
 let currentTurn = HUMAN;
 let locked = false;
 let gameOver = false;
+let gameToken = 0;
 let scores = {
   human: 0,
   ai: 0,
@@ -70,6 +76,7 @@ function render() {
     result.line.forEach((index) => cells[index].classList.add("win"));
   }
 
+  updatePlayerViews();
   humanCard.classList.toggle("active", currentTurn === HUMAN && !gameOver);
   aiCard.classList.toggle("active", currentTurn === AI && !gameOver);
   humanScoreEl.textContent = scores.human;
@@ -78,12 +85,41 @@ function render() {
 }
 
 function startGame() {
+  gameToken += 1;
   board = Array(9).fill(EMPTY);
   currentTurn = HUMAN;
   locked = false;
   gameOver = false;
-  statusEl.textContent = "小猫先手，点一个格子开始。";
+  statusEl.textContent = `${PLAYER_META[HUMAN].label}先手，点一个格子开始。`;
   render();
+}
+
+function choosePiece(piece) {
+  HUMAN = piece;
+  AI = piece === "cat" ? "dog" : "cat";
+  scores = {
+    human: 0,
+    ai: 0,
+    draw: 0,
+  };
+  startGame();
+}
+
+function updatePlayerViews() {
+  humanAvatar.src = PLAYER_META[HUMAN].image;
+  aiAvatar.src = PLAYER_META[AI].image;
+  humanName.textContent = PLAYER_META[HUMAN].label;
+  aiName.textContent = PLAYER_META[AI].label;
+  humanCard.classList.toggle("player-human-cat", HUMAN === "cat");
+  humanCard.classList.toggle("player-human-dog", HUMAN === "dog");
+  aiCard.classList.toggle("player-ai-cat", AI === "cat");
+  aiCard.classList.toggle("player-ai-dog", AI === "dog");
+
+  pieceButtons.forEach((button) => {
+    const isSelected = button.dataset.piece === HUMAN;
+    button.classList.toggle("selected", isSelected);
+    button.setAttribute("aria-pressed", String(isSelected));
+  });
 }
 
 function handleCellClick(event) {
@@ -99,15 +135,23 @@ function handleCellClick(event) {
   if (!ended) {
     currentTurn = AI;
     locked = true;
-    statusEl.textContent = difficulty === "easy" ? "小狗在闻一闻棋盘..." : "小狗正在认真思考...";
+    statusEl.textContent =
+      difficulty === "easy"
+        ? `${PLAYER_META[AI].label}在闻一闻棋盘...`
+        : `${PLAYER_META[AI].label}正在认真思考...`;
     render();
-    window.setTimeout(makeAiMove, 420);
+    const turnToken = gameToken;
+    window.setTimeout(() => makeAiMove(turnToken), 420);
   } else {
     render();
   }
 }
 
-function makeAiMove() {
+function makeAiMove(turnToken) {
+  if (turnToken !== gameToken || gameOver || currentTurn !== AI) {
+    return;
+  }
+
   const move = difficulty === "hard" ? findBestMove(board) : findEasyMove(board);
   placeMark(move, AI);
   const ended = finishTurn();
@@ -115,7 +159,7 @@ function makeAiMove() {
   if (!ended) {
     currentTurn = HUMAN;
     locked = false;
-    statusEl.textContent = "轮到小猫了。";
+    statusEl.textContent = `轮到${PLAYER_META[HUMAN].label}了。`;
   }
 
   render();
@@ -137,10 +181,10 @@ function finishTurn() {
 
   if (result.winner === HUMAN) {
     scores.human += 1;
-    statusEl.textContent = "小猫连成一线，赢啦！";
+    statusEl.textContent = `${PLAYER_META[HUMAN].label}连成一线，赢啦！`;
   } else if (result.winner === AI) {
     scores.ai += 1;
-    statusEl.textContent = "小狗赢了，再来一局扳回来。";
+    statusEl.textContent = `${PLAYER_META[AI].label}赢了，再来一局扳回来。`;
   } else {
     scores.draw += 1;
     statusEl.textContent = "棋盘满了，平局。";
@@ -267,6 +311,10 @@ modeButtons.forEach((button) => {
     modeButtons.forEach((item) => item.classList.toggle("active", item === button));
     startGame();
   });
+});
+
+pieceButtons.forEach((button) => {
+  button.addEventListener("click", () => choosePiece(button.dataset.piece));
 });
 
 startGame();

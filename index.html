@@ -19,24 +19,24 @@
           </button>
         </div>
 
-        <div class="duel" aria-label="猫狗对战">
-          <figure class="pet-frame cat-frame">
+        <div class="duel" aria-label="选择棋子">
+          <button class="pet-frame cat-frame selected" type="button" data-piece="cat" aria-pressed="true">
             <img src="assets/cat.jpg" alt="戴红眼镜的小猫" />
-            <figcaption>机灵小猫</figcaption>
-          </figure>
+            <span class="pet-name">选小猫</span>
+          </button>
           <div class="versus" aria-hidden="true">VS</div>
-          <figure class="pet-frame dog-frame">
+          <button class="pet-frame dog-frame" type="button" data-piece="dog" aria-pressed="false">
             <img src="assets/dog.jpg" alt="戴红眼镜的小狗" />
-            <figcaption>认真小狗</figcaption>
-          </figure>
+            <span class="pet-name">选小狗</span>
+          </button>
         </div>
 
         <div class="players" aria-label="玩家信息">
           <div class="player player-human active" id="humanCard">
-            <span class="avatar" aria-hidden="true"><img src="assets/cat.jpg" alt="" /></span>
+            <span class="avatar" aria-hidden="true"><img id="humanAvatar" src="assets/cat.jpg" alt="" /></span>
             <div>
               <span class="label">你</span>
-              <strong>小猫</strong>
+              <strong id="humanName">小猫</strong>
             </div>
           </div>
           <div class="scoreboard" aria-label="比分">
@@ -45,10 +45,10 @@
             <span><strong id="aiScore">0</strong>胜</span>
           </div>
           <div class="player player-ai" id="aiCard">
-            <span class="avatar" aria-hidden="true"><img src="assets/dog.jpg" alt="" /></span>
+            <span class="avatar" aria-hidden="true"><img id="aiAvatar" src="assets/dog.jpg" alt="" /></span>
             <div>
               <span class="label">电脑</span>
-              <strong>小狗</strong>
+              <strong id="aiName">小狗</strong>
             </div>
           </div>
         </div>
