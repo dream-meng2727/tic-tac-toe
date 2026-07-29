@@ -11,7 +11,7 @@
       <section class="game-shell" aria-labelledby="game-title">
         <div class="topbar">
           <div>
-            <p class="eyebrow">Tic Tac Toe</p>
+            <p class="eyebrow">Cute Battle</p>
             <h1 id="game-title">猫狗井字棋</h1>
           </div>
           <button class="icon-button" id="resetButton" type="button" aria-label="重新开始" title="重新开始">
@@ -19,9 +19,21 @@
           </button>
         </div>
 
+        <div class="duel" aria-label="猫狗对战">
+          <figure class="pet-frame cat-frame">
+            <img src="assets/cat.jpg" alt="戴红眼镜的小猫" />
+            <figcaption>机灵小猫</figcaption>
+          </figure>
+          <div class="versus" aria-hidden="true">VS</div>
+          <figure class="pet-frame dog-frame">
+            <img src="assets/dog.jpg" alt="戴红眼镜的小狗" />
+            <figcaption>认真小狗</figcaption>
+          </figure>
+        </div>
+
         <div class="players" aria-label="玩家信息">
           <div class="player player-human active" id="humanCard">
-            <span class="avatar" aria-hidden="true">🐱</span>
+            <span class="avatar" aria-hidden="true"><img src="assets/cat.jpg" alt="" /></span>
             <div>
               <span class="label">你</span>
               <strong>小猫</strong>
@@ -33,7 +45,7 @@
             <span><strong id="aiScore">0</strong>胜</span>
           </div>
           <div class="player player-ai" id="aiCard">
-            <span class="avatar" aria-hidden="true">🐶</span>
+            <span class="avatar" aria-hidden="true"><img src="assets/dog.jpg" alt="" /></span>
             <div>
               <span class="label">电脑</span>
               <strong>小狗</strong>

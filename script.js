@@ -1,6 +1,16 @@
 const HUMAN = "cat";
 const AI = "dog";
 const EMPTY = "";
+const PLAYER_META = {
+  [HUMAN]: {
+    label: "小猫",
+    image: "assets/cat.jpg",
+  },
+  [AI]: {
+    label: "小狗",
+    image: "assets/dog.jpg",
+  },
+};
 const WIN_LINES = [
   [0, 1, 2],
   [3, 4, 5],
@@ -45,9 +55,12 @@ function render() {
     if (value) {
       const mark = document.createElement("span");
       mark.className = `mark mark-${value}`;
-      mark.textContent = value === HUMAN ? "🐱" : "🐶";
+      const image = document.createElement("img");
+      image.src = PLAYER_META[value].image;
+      image.alt = "";
+      mark.append(image);
       cell.append(mark);
-      cell.setAttribute("aria-label", `第 ${index + 1} 格，${value === HUMAN ? "小猫" : "小狗"}`);
+      cell.setAttribute("aria-label", `第 ${index + 1} 格，${PLAYER_META[value].label}`);
     } else {
       cell.setAttribute("aria-label", `第 ${index + 1} 格，空`);
     }
