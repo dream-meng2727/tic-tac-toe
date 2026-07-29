@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>猫狗井字棋</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="game-shell" aria-labelledby="game-title">
+        <div class="topbar">
+          <div>
+            <p class="eyebrow">Tic Tac Toe</p>
+            <h1 id="game-title">猫狗井字棋</h1>
+          </div>
+          <button class="icon-button" id="resetButton" type="button" aria-label="重新开始" title="重新开始">
+            <span aria-hidden="true">↻</span>
+          </button>
+        </div>
+
+        <div class="players" aria-label="玩家信息">
+          <div class="player player-human active" id="humanCard">
+            <span class="avatar" aria-hidden="true">🐱</span>
+            <div>
+              <span class="label">你</span>
+              <strong>小猫</strong>
+            </div>
+          </div>
+          <div class="scoreboard" aria-label="比分">
+            <span><strong id="humanScore">0</strong>胜</span>
+            <span><strong id="drawScore">0</strong>平</span>
+            <span><strong id="aiScore">0</strong>胜</span>
+          </div>
+          <div class="player player-ai" id="aiCard">
+            <span class="avatar" aria-hidden="true">🐶</span>
+            <div>
+              <span class="label">电脑</span>
+              <strong>小狗</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls" aria-label="难度选择">
+          <button class="mode active" data-difficulty="easy" type="button">简单</button>
+          <button class="mode" data-difficulty="hard" type="button">困难</button>
+        </div>
+
+        <p class="status" id="status" aria-live="polite">小猫先手，点一个格子开始。</p>
+
+        <div class="board" id="board" role="grid" aria-label="井字棋棋盘">
+          <button class="cell" type="button" role="gridcell" aria-label="第 1 格" data-index="0"></button>
+          <button class="cell" type="button" role="gridcell" aria-label="第 2 格" data-index="1"></button>
+          <button class="cell" type="button" role="gridcell" aria-label="第 3 格" data-index="2"></button>
+          <button class="cell" type="button" role="gridcell" aria-label="第 4 格" data-index="3"></button>
+          <button class="cell" type="button" role="gridcell" aria-label="第 5 格" data-index="4"></button>
+          <button class="cell" type="button" role="gridcell" aria-label="第 6 格" data-index="5"></button>
+          <button class="cell" type="button" role="gridcell" aria-label="第 7 格" data-index="6"></button>
+          <button class="cell" type="button" role="gridcell" aria-label="第 8 格" data-index="7"></button>
+          <button class="cell" type="button" role="gridcell" aria-label="第 9 格" data-index="8"></button>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
